@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
@@ -22,7 +24,7 @@
     List<String> produkty = (List<String>) listaProduktow;
 %>
 
-<table class="table"><table align="center", border="1">
+<table class="table">
     <thead>
     <div style="text-align: center;">
     <tr>
@@ -33,48 +35,20 @@
     </div></thead>
     <tbody>
     <div style="text-align: center;">
-    <tr>
-        <th scope="row">1</th>
-        <td><%=produkty.get(0)%>
-        </td>
-        <td><%=cena.get(0)%>
-        </td>
-    </tr>
+
 
     <tr>
 
         <%
-            if (produkty.size() > 1) {
-                out.println("<th scope=\"row\">" + 2 + "</th>");
-                out.println("<td>" + produkty.get(1) + "</td>");
-                out.println("<td>" + cena.get(1) + "</td>");
+            for(int i=0;i<produkty.size();i++){
+                out.println("<tr>" + "<th scope=\"row\">" + (i+1) + "</th>" + "<td>" + produkty.get(i) + "</td>" + "<td>" + cena.get(i) + "</td>" + "</tr>");
             }
-            ;
         %>
 
     </tr>
-    <tr>
-        <%
-            if (produkty.size() > 2) {
-                out.println("<th scope=\"row\">" + 3 + "</th>");
-                out.println("<td>" + produkty.get(2) + "</td>");
-                out.println("<td>" + cena.get(2) + "</td>");
-            }
-            ;
-        %>
-    </tr>
-    <tr>
-        <%
-            if (produkty.size() > 3) {
-                out.println("<th scope=\"row\">" + 4 + "</th>");
-                out.println("<td>" + produkty.get(3) + "</td>");
-                out.println("<td>" + cena.get(3) + "</td>");
-            }
-            ;
-        %>
-    </tr>
+
     </div></tbody>
-</table></table>
+</table>
 
 <%
     Object suma = request.getAttribute("suma");

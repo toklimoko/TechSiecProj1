@@ -12,6 +12,6 @@ public class Policz {
 
     public double srednia(List<Produkt> zakupy){
         double wynik=suma(zakupy)/zakupy.size();
-        return wynik;
+        return Math.round(wynik*100)/100.0;
     }
 }

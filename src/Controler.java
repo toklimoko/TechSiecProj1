@@ -14,39 +14,39 @@ public class Controler extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.setCharacterEncoding("UTF-8");
-        String produkt1 = request.getParameter("produkt1");
-        String produkt2 = request.getParameter("produkt2");
-        String produkt3 = request.getParameter("produkt3");
-        String produkt4 = request.getParameter("produkt4");
+        String [] p = new String[8];
+        String[] l = {"produkt1", "produkt2", "produkt3", "produkt4", "cena1", "cena2", "cena3", "cena4"};
 
-        String cena1 = request.getParameter("cena1");
-        String cena2 = request.getParameter("cena2");
-        String cena3 = request.getParameter("cena3");
-        String cena4 = request.getParameter("cena4");
+        for (int i = 0; i < p.length; i++){
+            p[i] = request.getParameter(l[i]);
+        }
 
         List<Produkt> zakupy = new ArrayList<>();
-        Produkt.dodaj(zakupy,produkt1,cena1);
-        Produkt.dodaj(zakupy,produkt2,cena2);
-        Produkt.dodaj(zakupy,produkt3,cena3);
-        Produkt.dodaj(zakupy,produkt4,cena4);
 
-        Policz policz = new Policz();
+        for (int i = 0; i < p.length / 2; i++) {
+            if(!p[i].equals("") && !p[i + 4].equals("")) {
+                Produkt pr = new Produkt(p[i], p[i+4]);
+                zakupy.add(pr);
+            }
+        }
 
-        double srednia =policz.srednia(zakupy);
-        double suma =policz.suma(zakupy);
-
-
-        if (cena1.isEmpty() && cena2.isEmpty() && cena3.isEmpty() && cena4.isEmpty()) {
+        if (zakupy.isEmpty()){
             request.getRequestDispatcher("empty.jsp").forward(request, response);
         } else {
-            request.setAttribute("ceny",Produkt.rachunek(zakupy));
-            request.setAttribute("produkty",Produkt.lista(zakupy));
+
+            Policz policz = new Policz();
+
+            double srednia = policz.srednia(zakupy);
+            double suma = policz.suma(zakupy);
+
+            request.setAttribute("ceny", Produkt.rachunek(zakupy));
+            request.setAttribute("produkty", Produkt.lista(zakupy));
             request.setAttribute("suma", suma);
             request.setAttribute("srednia", srednia);
             request.getRequestDispatcher("summary.jsp").forward(request, response);
 
         }
+
     }
 
 }
